@@ -10,4 +10,10 @@ class Product
     price = row.getFloat("Price");
     
   }//end product constructor
+  
+  String toString()
+  {
+    return name + "," + price;
+  } //end toString()
+  
 }//end class encapsulation
