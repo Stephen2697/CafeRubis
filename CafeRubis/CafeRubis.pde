@@ -134,6 +134,7 @@ void operateBill (int selectionIndex)
     totalCost += products.get(selectionIndex).price;
     //add to bill arrayList
     bills.add(products.get(selectionIndex));
+    text(products.get(selectionIndex).name, insetBufferX, gap);
     //reset trigger variable
     selectionIndex=-1;
   }
@@ -144,5 +145,6 @@ void operateBill (int selectionIndex)
   text("Total: ", insetBufferX, gap);
   text(nf(totalCost, 1, 2), (width/2)+ (width/2)*.8 , gap);
   gap += 30;
+  //reset
   selectionIndex=-1;
 }
