@@ -23,5 +23,13 @@ void loadData()
   {
     Product product = new Product(row);    
     products.add(product);
-  }
+  } //end for
+  
+  //testing ArrayList
+  //int spacing =50; 
+  //for (int i=0; i<products.size(); i++)
+  //{
+  //  text("Test: " + products.get(i).name, 50,spacing);
+  //  spacing += 50;
+  //}
 }//end loadData()
