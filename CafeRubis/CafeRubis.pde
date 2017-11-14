@@ -23,6 +23,7 @@ void draw()
   textAlign(CENTER, CENTER);
   textSize(32);
   text("Café Rubis Till System", width/2, textBuffer);
+  displayBill();
   
   printProducts();
 }//end draw()
@@ -103,3 +104,14 @@ void mousePressed()
     }//end if
   }//end for
 }//end mousePressed()
+
+void displayBill()
+{
+  float billX = (width/2)+ (width/2)*.1;
+  float billY = (height/2)*.30;
+  float billWidth = (width/2)*.8;
+  float billHeight = height*.8;
+  fill(255);
+  stroke(0);
+  rect(billX,billY, billWidth, billHeight);
+}
