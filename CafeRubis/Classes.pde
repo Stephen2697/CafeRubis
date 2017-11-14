@@ -2,6 +2,8 @@ class Product
 {
   String name;
   float price;
+  float xCord;
+  float yCord;
   
   
   Product(TableRow row)
@@ -13,7 +15,8 @@ class Product
   
   String toString()
   {
-    return name + "," + price;
+    //X & Y cords used for debugging & implementing button clicks - not active at submission.
+    return name + ", " + price + "x=[" + xCord + "] " + price + "y=[" + yCord + "] " ;
   } //end toString()
   
 }//end class encapsulation
