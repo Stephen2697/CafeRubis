@@ -1,7 +1,9 @@
 //Student: Stephen Alger C16377163
 //global variables
 ArrayList<Product> products = new ArrayList<Product>(); 
-ArrayList<Product> bill = new ArrayList<Product>(); 
+ArrayList<Product> bills = new ArrayList<Product>(); 
+int selectionIndex=-1;
+float totalCost=0;
 
 void setup()
 {
@@ -24,6 +26,7 @@ void draw()
   textSize(32);
   text("Café Rubis Till System", width/2, textBuffer);
   displayBill();
+  operateBill(selectionIndex);
   
   printProducts();
 }//end draw()
@@ -71,8 +74,6 @@ void displayProducts()
     text(products.get(i).name, insetText, insetBufferY+(menuHeight/2));
     
     //setup Pricing text
-    fill(0);
-    textAlign(LEFT, CENTER);
     text(nf(products.get(i).price, 1, 2), menuWidth - (insetText*.25), insetBufferY+(menuHeight/2));
     
     //save product button locations 
@@ -96,6 +97,8 @@ void mousePressed()
     if(mouseX > products.get(i).xCord && mouseX < products.get(i).xCord+ menuWidth 
     && mouseY > products.get(i).yCord && mouseY < products.get(i).yCord+ menuHeight)
     {
+      //select product
+      selectionIndex = i;
       fill(255,0,0,60);
       stroke(0);
       frameRate(10);
@@ -114,4 +117,32 @@ void displayBill()
   fill(255);
   stroke(0);
   rect(billX,billY, billWidth, billHeight);
+  fill(0);
+  textSize(14);
+  textAlign(CENTER, CENTER);
+  text("Your Bill", (billX + (billWidth/2)), billY+20 );
+}
+
+void operateBill (int selectionIndex)
+{
+  float insetBufferX = (width/2)+ (width/2)*.2;
+  float gap = (height/2)*.30+30;
+  
+  //if button has been pressed
+  if (selectionIndex != -1)
+  {
+    totalCost += products.get(selectionIndex).price;
+    //add to bill arrayList
+    bills.add(products.get(selectionIndex));
+    //reset trigger variable
+    selectionIndex=-1;
+  }
+  
+  //print total
+  fill(0);
+  textAlign(LEFT, CENTER);
+  text("Total: ", insetBufferX, gap);
+  text(nf(totalCost, 1, 2), (width/2)+ (width/2)*.8 , gap);
+  gap += 30;
+  selectionIndex=-1;
 }
