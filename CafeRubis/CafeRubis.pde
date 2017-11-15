@@ -2,15 +2,17 @@
 //global variables
 ArrayList<Product> products = new ArrayList<Product>(); 
 ArrayList<Product> bills = new ArrayList<Product>(); 
+
 int selectionIndex=-1;
 float totalCost=0;
+boolean maxFlag=false;
 
 void setup()
 {
   size(800,600);
   loadData();
   printProducts();
-
+  
 }//end setup()
 
 void draw()
@@ -26,8 +28,6 @@ void draw()
   textSize(32);
   text("Café Rubis Till System", width/2, textBuffer);
   displayBill();
-  operateBill(selectionIndex);
-  
   printProducts();
 }//end draw()
 
@@ -104,6 +104,8 @@ void mousePressed()
       frameRate(10);
       //give user feedback on button press
       rect(products.get(i).xCord,products.get(i).yCord, menuWidth, menuHeight);
+      operateBill(selectionIndex);
+      break;
     }//end if
   }//end for
 }//end mousePressed()
@@ -114,6 +116,9 @@ void displayBill()
   float billY = (height/2)*.30;
   float billWidth = (width/2)*.8;
   float billHeight = height*.8;
+  float insetBufferX = (width/2)+ (width/2)*.15;
+  float gap = (height/2)*.30+40;
+  
   fill(255);
   stroke(0);
   rect(billX,billY, billWidth, billHeight);
@@ -121,6 +126,38 @@ void displayBill()
   textSize(14);
   textAlign(CENTER, CENTER);
   text("Your Bill", (billX + (billWidth/2)), billY+20 );
+  
+  if (bills.size()>0)
+  {
+    for (int i=0; i<bills.size();i++)
+    {
+      if (gap< billHeight*1.05)
+      {
+        textAlign(LEFT, CENTER);
+        text(bills.get(i).name, insetBufferX, gap);
+        text(nf(bills.get(i).price, 1, 2), (width/2)+ (width/2)*.75 , gap);
+        gap += 30;
+      } //end if
+      
+      else
+      {
+        
+        text("Maximum Number of purchases made.", insetBufferX, gap);
+        gap += 30;
+        //end loop manually
+        i = bills.size();
+        maxFlag = true;
+        
+      }//end else
+    
+    }//end for
+  }//end if
+  
+  //print total
+  fill(0);
+  textAlign(LEFT, CENTER);
+  text("Total: ", insetBufferX, gap);
+  text(nf(totalCost, 1, 2), (width/2)+ (width/2)*.75 , gap);
 }
 
 void operateBill (int selectionIndex)
@@ -128,23 +165,15 @@ void operateBill (int selectionIndex)
   float insetBufferX = (width/2)+ (width/2)*.2;
   float gap = (height/2)*.30+30;
   
-  //if button has been pressed
-  if (selectionIndex != -1)
+  if (maxFlag != true)
   {
     totalCost += products.get(selectionIndex).price;
     //add to bill arrayList
     bills.add(products.get(selectionIndex));
-    text(products.get(selectionIndex).name, insetBufferX, gap);
     //reset trigger variable
     selectionIndex=-1;
-  }
-  
-  //print total
-  fill(0);
-  textAlign(LEFT, CENTER);
-  text("Total: ", insetBufferX, gap);
-  text(nf(totalCost, 1, 2), (width/2)+ (width/2)*.8 , gap);
-  gap += 30;
-  //reset
-  selectionIndex=-1;
-}
+   
+    gap += 30;
+  }//end if
+ 
+}//end function()
